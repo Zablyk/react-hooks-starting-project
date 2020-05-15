@@ -14,12 +14,9 @@ const Ingredients = () => {
     ]);
   };
 
-  //  const removeIngredientHandler = ingredient => {
-  //    setUserIngredients(prevIngredients => [
-  //      ...prevIngredients,
-  //      {id: Math.random().toString(), ...ingredient}
-  //    ]);
-  //  };
+   const removeIngredientHandler = id => {
+     setUserIngredients(userIngredients.filter (userIngredients => userIngredients.id !== id));
+   };
 
   return (
     <div className="App">
@@ -27,7 +24,7 @@ const Ingredients = () => {
 
       <section>
         <Search />
-        <IngredientList ingredients={userIngredients} onRemoveItem={(id) => {console.log(id)}}/>
+        <IngredientList ingredients={userIngredients} onRemoveItem={(id) => {removeIngredientHandler(id)}}/>
       </section>
     </div>
   );
