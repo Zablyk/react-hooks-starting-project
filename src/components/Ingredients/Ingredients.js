@@ -14,13 +14,20 @@ const Ingredients = () => {
     ]);
   };
 
+  //  const removeIngredientHandler = ingredient => {
+  //    setUserIngredients(prevIngredients => [
+  //      ...prevIngredients,
+  //      {id: Math.random().toString(), ...ingredient}
+  //    ]);
+  //  };
+
   return (
     <div className="App">
       <IngredientForm onAddIngredient={addIngredientHandler}/>
 
       <section>
         <Search />
-        <IngredientList ingredients={userIngredients} onRemoveItem={() => {}}/>
+        <IngredientList ingredients={userIngredients} onRemoveItem={(id) => {console.log(id)}}/>
       </section>
     </div>
   );
