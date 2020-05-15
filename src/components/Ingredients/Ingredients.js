@@ -22,6 +22,10 @@ const Ingredients = () => {
         setUserIngredients(loadedIngredients);
       });
   }, []);
+
+  useEffect(() => {
+    console.log('RENDERING INGREDIENTS', userIngredients);
+  }, [userIngredients]);
   
   const addIngredientHandler = ingredient => {
     fetch('https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients.json', {
