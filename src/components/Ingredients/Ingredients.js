@@ -6,6 +6,7 @@ import Search from './Search';
 
 const Ingredients = () => {
   const [ userIngredients, setUserIngredients ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(false);
 
   useEffect(() => {
     console.log('RENDERING INGREDIENTS', userIngredients);
@@ -16,12 +17,14 @@ const Ingredients = () => {
   }, []); 
 
   const addIngredientHandler = ingredient => {
+    setIsLoading(true);
     fetch('https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients.json', {
       method: 'POST',
       body: JSON.stringify(ingredient),
       headers: { 'Content-Type': 'application/json'}
     }).then ( response => {
-       return response.json();
+        setIsLoading(false);
+        return response.json();
     }).then (responseData => {
       setUserIngredients(prevIngredients => [
         ...prevIngredients,
@@ -31,17 +34,22 @@ const Ingredients = () => {
   };
 
    const removeIngredientHandler = ingredientId => {
+     setIsLoading(true);
     fetch(`https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients/${ingredientId}.json`,
     {
       method: 'DELETE'
     }).then (response => {
+      setIsLoading(false);
       setUserIngredients(userIngredients.filter (userIngredients => userIngredients.id !== ingredientId));
     });
   };
 
   return (
     <div className="App">
-      <IngredientForm onAddIngredient={addIngredientHandler}/>
+      <IngredientForm
+        onAddIngredient={addIngredientHandler}
+        loading={isLoading}
+      />
 
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler}/>
