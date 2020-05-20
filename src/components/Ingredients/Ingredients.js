@@ -3,11 +3,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
+import ErrorModal from '../UI/ErrorModal';
 
 const Ingredients = () => {
   const [ userIngredients, setUserIngredients ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(false);
-
+  const [ error, setError ] = useState();
   useEffect(() => {
     console.log('RENDERING INGREDIENTS', userIngredients);
   }, [userIngredients]);
@@ -35,17 +36,26 @@ const Ingredients = () => {
 
    const removeIngredientHandler = ingredientId => {
      setIsLoading(true);
-    fetch(`https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients/${ingredientId}.json`,
+    fetch(`https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients/${ingredientId}.jon`,
     {
       method: 'DELETE'
     }).then (response => {
       setIsLoading(false);
       setUserIngredients(userIngredients.filter (userIngredients => userIngredients.id !== ingredientId));
-    });
+    }).catch(error => {
+        setError(error.message);
+        setIsLoading(false);
+      });
   };
+
+  const clearError = () => {
+    setError(null);
+  }
 
   return (
     <div className="App">
+      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+
       <IngredientForm
         onAddIngredient={addIngredientHandler}
         loading={isLoading}
