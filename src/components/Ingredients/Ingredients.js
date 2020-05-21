@@ -30,10 +30,6 @@ const Ingredients = () => {
     reqIdentifer
   } = useHttp();
 
-  // const [userIngredients, setUserIngredients] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState();
-
   useEffect(() => {
     if (!isLoading && !error && reqIdentifer === 'REMOVE_INGREDIENT') {
       dispatch({ type: 'DELETE', id: reqExtra });
@@ -46,7 +42,6 @@ const Ingredients = () => {
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
-    // setUserIngredients(filteredIngredients);
     dispatch({ type: 'SET', ingredients: filteredIngredients });
   }, []);
 
@@ -58,26 +53,6 @@ const Ingredients = () => {
       ingredient,
       'ADD_INGREDIENT'
     );
-    // dispatchHttp({ type: 'SEND' });
-    // fetch('https://react-hooks-starting-pro-e28a1.firebaseio.com/ingredients.json', {
-    //   method: 'POST',
-    //   body: JSON.stringify(ingredient),
-    //   headers: { 'Content-Type': 'application/json' }
-    // })
-    //   .then(response => {
-    //     dispatchHttp({ type: 'RESPONSE' });
-    //     return response.json();
-    //   })
-    //   .then(responseData => {
-    //     // setUserIngredients(prevIngredients => [
-    //     //   ...prevIngredients,
-    //     //   { id: responseData.name, ...ingredient }
-    //     // ]);
-    //     dispatch({
-    //       type: 'ADD',
-    //       ingredient: { id: responseData.name, ...ingredient }
-    //     });
-    //   });
   }, [sendRequest]);
 
   const removeIngredientHandler = useCallback(
@@ -94,7 +69,6 @@ const Ingredients = () => {
   );
 
   const clearError = useCallback(() => {
-    // dispatchHttp({ type: 'CLEAR' });
   }, []);
 
   const ingredientList = useMemo(() => {
